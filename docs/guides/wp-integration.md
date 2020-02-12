@@ -156,7 +156,7 @@ public function widget( $args, $instance ) {
 
 Well, if it works for widgets, why shouldn't it work for shortcodes? Of course it does!
 
-Let’s implement a `[youtube]` shortcode which embeds a youtube video.  
+Let’s implement a `[youtube]` shortcode which embeds a youtube video.
 For the desired usage of `[youtube id=xxxx]`, we only need a few lines of code:
 
 ```php
@@ -188,10 +188,10 @@ Now, when the YouTube embed code changes, we only need to edit the `youtube-shor
 
 ### Layouts with Shortcodes
 
-Timber and Twig can process your shortcodes by using the `{% filter shortcodes %}` tag. Let’s say you're using a `[tab]` shortcode, for example:
+Timber and Twig can process your shortcodes by using the `{% apply shortcodes %}` tag. Let’s say you're using a `[tab]` shortcode, for example:
 
 ```twig
-{% filter shortcodes %}
+{% apply shortcodes %}
     [tabs tab1="Tab 1 title" tab2="Tab 2 title" layout="horizontal" backgroundcolor="" inactivecolor=""]
         [tab id=1]
             Something something something
@@ -201,7 +201,7 @@ Timber and Twig can process your shortcodes by using the `{% filter shortcodes %
             Tab 2 content here
         [/tab]
     [/tabs]
-{% endfilter %}
+{% endapply %}
 ```
 
 ## Password protected posts
@@ -211,7 +211,7 @@ It’s recommended to use the [`post_password_required()`](https://developer.wor
 **single.php**
 
 ```php
-$context = Timber::get_context();
+$context = Timber::context();
 $post = Timber::query_post();
 $context['post'] = $post;
 if ( post_password_required( $post->ID ) ) {
@@ -257,7 +257,7 @@ function get_password_protected_template( $template ) {
     }
 
     return $template;
-}, 99 );
+};
 ```
 
 With this filter, you can use a **password-protected.php** template file with the following contents:
@@ -265,7 +265,7 @@ With this filter, you can use a **password-protected.php** template file with th
 ```php
 <?php
 
-$context                  = Timber::get_context();
+$context                  = Timber::context();
 $context['post']          = new Timber\Post();
 $context['password_form'] = get_the_password_form();
 
